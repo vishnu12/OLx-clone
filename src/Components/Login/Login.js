@@ -5,18 +5,20 @@ import Logo from '../../olx-logo.png';
 import './Login.css';
 
 
-function Login() {
+function Login({location}) {
 
   const {firebase}=useContext(FirebaseContext)
   const history=useHistory()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
+  const redirect=location.search?location.search.split('=')[1]:'/'
+
   async function handleSubmit(e) {
     e.preventDefault()
     try {
       await firebase.auth().signInWithEmailAndPassword(email,password)
-      history.push('/')
+      history.push(redirect)
     } catch (error) {
       console.log(error.message)
     }

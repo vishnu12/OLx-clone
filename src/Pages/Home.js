@@ -7,12 +7,12 @@ import './Home.css';
 import Posts from '../Components/Posts/Posts';
 import Footer from '../Components/Footer/Footer';
 
-function Home(props) {
+function Home({match}) {
   return (
     <div className="homeParentDiv">
       <Header />
       <Banner />
-      <Posts />
+      <Posts match={match} />
       <Footer />
     </div>
   );

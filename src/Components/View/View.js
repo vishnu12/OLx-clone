@@ -21,8 +21,6 @@ function View({match}) {
 
   useEffect(()=>getPostById(match.params.id),[])
 
-  console.log(post);
-  console.log(userInfo);
   
   return (
     <div className="viewParentDiv">

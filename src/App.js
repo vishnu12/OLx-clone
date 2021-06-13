@@ -26,9 +26,10 @@ function App() {
     <div>
       <Switch>
        <Route exact path='/' component={Home}/>
-       <Route path='/signup' component={Signup}/>
-       <Route path='/login' component={Login}/>
-       <Route path='/create' component={CreatePage}/>
+       <Route path='/search/:term' component={Home}/>
+       <Route exact path='/signup' component={Signup}/>
+       <Route exact path='/login' component={Login}/>
+       <Route exact path='/create' component={CreatePage}/>
        <Route path='/details/:id' component={ViewPost}/>
       </Switch>
     </div>

@@ -1,15 +1,21 @@
 import React,{useState,useEffect,useContext} from 'react';
+import { ToastContainer, toast } from 'material-react-toastify';
+import 'material-react-toastify/dist/ReactToastify.css';
 import {useHistory} from 'react-router-dom'
 import Heart from '../../assets/Heart';
 import {FirebaseContext} from '../../store/FirebaseContext'
 import './Post.css';
 
-function Posts() {
+
+function Posts({match}) {
+  
   const history=useHistory()
   const {firebase}=useContext(FirebaseContext)
+  const term=match.params.term?match.params.term:''
   const [posts, setPosts] = useState([])
 
-  async function getProductsPosts() {
+  async function getProductsPosts(term) {
+    let tempArray=[]
     const res = await firebase.firestore().collection('products').get()
     const posts=res.docs.map(itm=>{
       return {
@@ -17,20 +23,35 @@ function Posts() {
         id:itm.id
       }
     })
-    setPosts(posts)
+    posts && posts.forEach(itm=>{
+      if(itm.prodName.includes(term) || itm.category.includes(term)){
+         tempArray.push(itm)
+      }
+    })
+   if(tempArray.length===0){
+     toast.warning('No such Product exists',{
+       position:toast.POSITION.TOP_CENTER,
+       autoClose:2000
+     })
+     setPosts(posts)
+   }else{
+    setPosts(tempArray)
+   }
   }
 
   useEffect(()=>{
-     getProductsPosts()
-  },[])
+    getProductsPosts(term)
+  },[match])
+
 
   function handleClick(id) {
    history.push(`/details/${id}`)
   }
 
-
+console.log(posts);
   return (
     <div className="postParentDiv">
+      <ToastContainer />
       <div className="moreView">
         <div className="heading">
           <span>Quick Menu</span>

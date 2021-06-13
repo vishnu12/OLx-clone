@@ -1,4 +1,4 @@
-import React, { Fragment,useState,useContext } from 'react';
+import React, { Fragment,useState,useContext,useEffect } from 'react';
 import {useHistory} from 'react-router-dom'
 import { ToastContainer, toast } from 'material-react-toastify';
 import 'material-react-toastify/dist/ReactToastify.css';
@@ -13,6 +13,12 @@ const history=useHistory()
 const {user}=useContext(AuthContext)  
 const {firebase}=useContext(FirebaseContext)
 
+useEffect(()=>{
+ if(!user){
+   history.push(`/login?redirect=create`)
+ }
+},[user])
+
 const [values, setValues] = useState({
   prodName:'',
   category:'',
@@ -21,7 +27,6 @@ const [values, setValues] = useState({
 })
 
 const [imgPath, setImgPath] = useState('')
-
 const {prodName,category,price,file}=values
 
 function imageHandler(event){

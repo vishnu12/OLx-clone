@@ -1,4 +1,4 @@
-import React,{useContext} from 'react';
+import React,{useContext,useState} from 'react';
 import {Link, useHistory} from 'react-router-dom'
 import './Header.css';
 import OlxLogo from '../../assets/OlxLogo';
@@ -13,10 +13,20 @@ function Header() {
   const {user}=useContext(AuthContext)
   const {firebase}=useContext(FirebaseContext)
   const history=useHistory()
+
+  const [searchTerm, setSearchTerm] = useState('')
+
+  function handleClick() {
+    if(searchTerm){
+      history.push(`/search/${searchTerm}`)
+      setSearchTerm('')
+    }
+    
+  }
   return (
     <div className="headerParentDiv">
       <div className="headerChildDiv">
-        <div className="brandName">
+        <div className="brandName" onClick={()=>history.push('/')} style={{cursor:'pointer'}}>
           <OlxLogo></OlxLogo>
         </div>
         <div className="placeSearch">
@@ -29,9 +39,11 @@ function Header() {
             <input
               type="text"
               placeholder="Find car,mobile phone and more..."
+              value={searchTerm}
+              onChange={e=>setSearchTerm(e.target.value)}
             />
           </div>
-          <div className="searchAction">
+          <div className="searchAction" onClick={()=>handleClick()}>
             <Search color="#ffffff"></Search>
           </div>
         </div>
@@ -52,7 +64,7 @@ function Header() {
           firebase.auth().signOut()
           history.push('/')
         }}>Logout</span>}
-        <div className="sellMenu">
+        <div className="sellMenu" onClick={()=>history.push('/create')}>
           <SellButton></SellButton>
           <div className="sellMenuContent">
             <SellButtonPlus></SellButtonPlus>
