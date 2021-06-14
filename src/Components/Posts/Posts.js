@@ -13,17 +13,18 @@ function Posts({match}) {
   const {firebase}=useContext(FirebaseContext)
   const term=match.params.term?match.params.term:''
   const [posts, setPosts] = useState([])
+  const [sortedPosts, setSortedPosts] = useState([])
   
   async function getProductsPosts() {
     let tempArray=[]
     const res = await firebase.firestore().collection('products').get()
-    if(res){
-      const posts=res.docs.map(itm=>{
+    const posts=res.docs.map(itm=>{
         return {
           ...itm.data(),
           id:itm.id
         }
       })
+      setSortedPosts(posts && posts.sort(() => Math.random() - Math.random()).slice(0, 3))
       posts && posts.forEach(itm=>{
         if(itm.prodName.includes(term) || itm.category.includes(term)){
            tempArray.push(itm)
@@ -39,7 +40,7 @@ function Posts({match}) {
      }else{
       setPosts(tempArray)
      }
-    }
+    
   }
 
   useEffect(()=>{
@@ -51,8 +52,7 @@ function Posts({match}) {
   function handleClick(id) {
    history.push(`/details/${id}`)
   }
-console.log(posts);
-
+  
   return (
     <div className="postParentDiv">
       <ToastContainer />
@@ -91,22 +91,28 @@ console.log(posts);
           <span>Fresh recommendations</span>
         </div>
         <div className="cards">
-          <div className="card">
-            <div className="favorite">
-              <Heart></Heart>
+        {
+          sortedPosts && sortedPosts.map((post,ind)=>{
+            return(
+              <div className="card">
+              <div className="favorite">
+                <Heart></Heart>
+              </div>
+              <div className="image">
+                <img src={post.url} alt="" />
+              </div>
+              <div className="content">
+                <p className="rate">&#x20B9; {post.price}</p>
+                <span className="kilometer">{post.category}</span>
+                <p className="name"> {post.name}</p>
+              </div>
+              <div className="date">
+                <span>{post.createdAt}</span>
+              </div>
             </div>
-            <div className="image">
-              <img src="../../../Images/R15V3.jpg" alt="" />
-            </div>
-            <div className="content">
-              <p className="rate">&#x20B9; 250000</p>
-              <span className="kilometer">Two Wheeler</span>
-              <p className="name"> YAMAHA R15V3</p>
-            </div>
-            <div className="date">
-              <span>10/5/2021</span>
-            </div>
-          </div>
+            )
+          })
+        }
         </div>
       </div>
     </div>
