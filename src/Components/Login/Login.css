@@ -35,4 +35,15 @@
     justify-content: center;
     cursor: pointer;
   }
+
+  .btn-img{
+    object-fit: contain;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border: none;
+    border-radius: 50%;
+  }
+
   

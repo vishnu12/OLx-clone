@@ -1,4 +1,6 @@
 import React,{useState,useContext} from 'react';
+import { ToastContainer, toast } from 'material-react-toastify';
+import 'material-react-toastify/dist/ReactToastify.css';
 import {useHistory,Link} from 'react-router-dom'
 import {FirebaseContext} from '../../store/FirebaseContext'
 import Logo from '../../olx-logo.png';
@@ -10,6 +12,10 @@ export default function Signup() {
 const {firebase}=useContext(FirebaseContext)
 const history=useHistory()
 
+let imgObj={
+  img:<img className='btn-img' src='/Images/spinner.gif' />
+}
+
   const [values, setValues] = useState({
     name:'',
     email:'',
@@ -17,6 +23,11 @@ const history=useHistory()
     password:''
     
   })
+
+  const {name,email,phone,password}=values
+  const [loading, setLoading] = useState(false)
+
+  let condition=name===''||email===''||password===''||phone==''
 
   function handleChange(e) {
     const {name,value}=e.target
@@ -28,6 +39,13 @@ const history=useHistory()
 
   async function handleSubmit(e) {
     e.preventDefault()
+    setLoading(true)
+    if(condition){
+      toast.warning('Please add all fields',{
+        position:toast.POSITION.TOP_RIGHT
+      })
+      setLoading(false)
+    }
     try {
       const res=await firebase.auth().createUserWithEmailAndPassword(email,password)
       await res.user.updateProfile({displayName:name})
@@ -36,16 +54,28 @@ const history=useHistory()
         username:name,
         phone:phone
       })
+
+      toast.success('User registered successfully',{
+        position:toast.POSITION.TOP_CENTER
+      })
+      setLoading(false)
+      setInterval(()=>history.push('/login'),2000)
     } catch (error) {
-      console.log(error);
+      if(error && !condition){
+        toast.error('User registration failed, Please try again',{
+          position:toast.POSITION.TOP_CENTER
+        })
+        setLoading(false)
+      }
     }
-   history.push('/login')
 
   }
 
-  const {name,email,phone,password}=values
+  
+
   return (
     <div>
+      <ToastContainer />
       <div className="signupParentDiv">
         <img width="200px" height="200px" src={Logo}></img>
         <form onSubmit={handleSubmit}>
@@ -90,7 +120,7 @@ const history=useHistory()
           />
           <br />
           <br />
-          <button>Signup</button>
+          <button type='submit'>{loading?imgObj.img:'Login'}</button>
         </form>
         <Link style={{textDecoration:'none'}} to='/login'><a>Login</a></Link>
       </div>

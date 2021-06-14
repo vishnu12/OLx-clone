@@ -29,7 +29,7 @@ function Posts({match}) {
       }
     })
    if(tempArray.length===0){
-     toast.warning('No such Product exists',{
+     toast.warning('No such item exists',{
        position:toast.POSITION.TOP_CENTER,
        autoClose:2000
      })
