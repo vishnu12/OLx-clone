@@ -1,4 +1,4 @@
-import React, { Fragment,useState,useContext,useEffect } from 'react';
+import React, { Fragment,useState,useContext,useEffect} from 'react';
 import {useHistory} from 'react-router-dom'
 import { ToastContainer, toast } from 'material-react-toastify';
 import 'material-react-toastify/dist/ReactToastify.css';
@@ -26,8 +26,15 @@ const [values, setValues] = useState({
   file:'',
 })
 
+const [loading, setLoading] = useState(false)
 const [imgPath, setImgPath] = useState('')
 const {prodName,category,price,file}=values
+
+let condition=prodName===''||category===''||price===''||file===''
+
+let imgObj={
+  img:<img className='btn-img' src='/Images/spinner.gif' />
+}
 
 function imageHandler(event){
   if (event.target.files && event.target.files[0]) {
@@ -45,45 +52,59 @@ function handleChange(e) {
   })
 }
 
-async function fireBaseUpload(){
-  try {
-    const {ref}=await firebase.storage().ref(`/image/${file.name}`).put(file)
-    const path=await ref.getDownloadURL()
-    if(path){
-      productUploadToFirestore(path)
-      toast.success('Product succesfully uploaded to firestore')
-       setValues({
-          prodName:'',
-          category:'',
-          price:'',
-          file:'',
-        })
-        setImgPath('')
-        setInterval(()=>history.push('/'),1500)
-    }
-  } catch (error) {
-    toast.error('File upload failed')
-  }
-}
-
 async function productUploadToFirestore(path) {
   try {
-      firebase.firestore().collection('products').add({
+      await firebase.firestore().collection('products').add({
       prodName,
       category,
       price,
       url:path,
       userId:user.uid,
       createdAt:new Date().toDateString()
-   
      })
   } catch (error) {
-    toast.error('Product upload failed')
+    toast.error('Product creation failed',{
+      position:toast.POSITION.TOP_RIGHT
+    })
   }
 }
 
+async function fireBaseUpload(){
+  try {
+    setLoading(true)
+    const {ref}=await firebase.storage().ref(`/image/${file.name}`).put(file)
+    const path=await ref.getDownloadURL()
+    if(path){
+      productUploadToFirestore(path)
+      toast.success('Product created successfully',{
+        position:toast.POSITION.TOP_RIGHT
+      })
+        setValues({
+          prodName:'',
+          category:'',
+          price:'',
+          file:''
+        })
+        setLoading(false)
+    }
+  } catch (error) {
+      toast.error('File upload failed',{
+        position:toast.POSITION.TOP_RIGHT
+      })
+
+      setLoading(false)
+  }
+}
+
+
 async function handleSubmit(e) {
   e.preventDefault()
+  if(condition){
+    toast.warning('Please add all fields',{
+      position:toast.POSITION.TOP_RIGHT
+    })
+    return
+  }
   fireBaseUpload()
   
 }
@@ -128,7 +149,7 @@ async function handleSubmit(e) {
             <br />
             <input type="file" name='file' onChange={handleChange} />
             <br />
-            <button className="uploadBtn" type='submit'>upload and Submit</button>
+            <button className="uploadBtn" type='submit'>{loading?imgObj.img:'Upload and Submit'}</button>
           </form>
         </div>
     

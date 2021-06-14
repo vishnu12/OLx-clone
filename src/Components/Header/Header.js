@@ -19,9 +19,7 @@ function Header() {
   function handleClick() {
     if(searchTerm){
       history.push(`/search/${searchTerm}`)
-      setSearchTerm('')
     }
-    
   }
   return (
     <div className="headerParentDiv">

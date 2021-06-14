@@ -30,3 +30,12 @@
     border: 2px solid #002f34;
   }
   
+  .btn-img{
+    object-fit: contain;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border: none;
+    border-radius: 50%;
+  }

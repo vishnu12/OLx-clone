@@ -13,42 +13,46 @@ function Posts({match}) {
   const {firebase}=useContext(FirebaseContext)
   const term=match.params.term?match.params.term:''
   const [posts, setPosts] = useState([])
-
-  async function getProductsPosts(term) {
+  
+  async function getProductsPosts() {
     let tempArray=[]
     const res = await firebase.firestore().collection('products').get()
-    const posts=res.docs.map(itm=>{
-      return {
-        ...itm.data(),
-        id:itm.id
-      }
-    })
-    posts && posts.forEach(itm=>{
-      if(itm.prodName.includes(term) || itm.category.includes(term)){
-         tempArray.push(itm)
-      }
-    })
-   if(tempArray.length===0){
-     toast.warning('No such item exists',{
-       position:toast.POSITION.TOP_CENTER,
-       autoClose:2000
-     })
-     setPosts(posts)
-   }else{
-    setPosts(tempArray)
-   }
+    if(res){
+      const posts=res.docs.map(itm=>{
+        return {
+          ...itm.data(),
+          id:itm.id
+        }
+      })
+      posts && posts.forEach(itm=>{
+        if(itm.prodName.includes(term) || itm.category.includes(term)){
+           tempArray.push(itm)
+        }
+      })
+     if(tempArray.length===0){
+       toast.warning('No such item exists',{
+         position:toast.POSITION.TOP_CENTER,
+         autoClose:2000
+       })
+       setPosts(posts)
+      
+     }else{
+      setPosts(tempArray)
+     }
+    }
   }
 
   useEffect(()=>{
-    getProductsPosts(term)
+   getProductsPosts()
   },[match])
 
+  
 
   function handleClick(id) {
    history.push(`/details/${id}`)
   }
-
 console.log(posts);
+
   return (
     <div className="postParentDiv">
       <ToastContainer />
