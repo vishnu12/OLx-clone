@@ -19,6 +19,9 @@ function Header() {
   function handleClick() {
     if(searchTerm){
       history.push(`/search/${searchTerm}`)
+      setSearchTerm('')
+    }else{
+      history.push('/')
     }
   }
   return (
