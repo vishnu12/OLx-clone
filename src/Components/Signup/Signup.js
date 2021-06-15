@@ -59,7 +59,7 @@ let imgObj={
         position:toast.POSITION.TOP_CENTER
       })
       setLoading(false)
-      setInterval(()=>history.push('/login'),2000)
+      setTimeout(()=>history.push('/login'),2000)
     } catch (error) {
       if(error && !condition){
         toast.error('User registration failed, Please try again',{
@@ -77,10 +77,11 @@ let imgObj={
     <div>
       <ToastContainer />
       <div className="signupParentDiv">
-        <img width="200px" height="200px" src={Logo}></img>
+        <div className='img-div'>
+        <img width="100" height="100" src={Logo}></img>
+        </div>
         <form onSubmit={handleSubmit}>
           <label htmlFor="fname">Username</label>
-          <br />
           <input
             className="input"
             type="text"
@@ -90,7 +91,6 @@ let imgObj={
           />
           <br />
           <label htmlFor="fname">Email</label>
-          <br />
           <input
             className="input"
             type="email"
@@ -100,7 +100,6 @@ let imgObj={
           />
           <br />
           <label htmlFor="lname">Phone</label>
-          <br />
           <input
             className="input"
             type="number"
@@ -110,7 +109,6 @@ let imgObj={
           />
           <br />
           <label htmlFor="lname">Password</label>
-          <br />
           <input
             className="input"
             type="password"
@@ -120,7 +118,7 @@ let imgObj={
           />
           <br />
           <br />
-          <button type='submit'>{loading?imgObj.img:'Login'}</button>
+          <button type='submit'>{loading?imgObj.img:'Sign Up'}</button>
         </form>
         <Link style={{textDecoration:'none'}} to='/login'><a>Login</a></Link>
       </div>

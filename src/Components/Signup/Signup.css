@@ -1,12 +1,26 @@
 .signupParentDiv {
     border: 1px solid black;
     width: max-content;
+    justify-content: center;
+    align-items: center;
     padding: 10px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 6px;
+  }
+  
+.signupParentDiv .img-div{
+  margin: 1rem auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+  .signupParentDiv form{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
   }
   
   .signupParentDiv .input {
@@ -34,5 +48,15 @@
     display: flex;
     justify-content: center;
     cursor: pointer;
+  }
+
+  .btn-img{
+    object-fit: contain;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border: none;
+    border-radius: 50%;
   }
   

@@ -1,0 +1,25 @@
+
+.message{
+    width: 10rem;
+    min-height: 2rem;
+    border-radius: 5px;
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+    margin-bottom: 1rem;
+}
+
+.message p{
+color: #000;
+font-size: 15px;
+font-weight: bold;
+opacity: 0.8;
+}
+
+.message .msg{
+ display: inline; 
+ color: #fff;
+ white-space: initial;
+ word-break: break-all;
+ width: 100%;
+ min-height: 3rem;
+ font-size: 18px;
+}

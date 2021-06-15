@@ -8,7 +8,13 @@
     transform: translate(-50%, -50%);
     border-radius: 6px;
   }
-  
+
+  .loginParentDiv form{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+  }
+
   .loginParentDiv .input {
     border-top-color: transparent;
     border-left-color: transparent;

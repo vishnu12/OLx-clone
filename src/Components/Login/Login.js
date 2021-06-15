@@ -52,7 +52,6 @@ function Login({location}) {
         <img width="200px" height="200px" src={Logo}></img>
         <form onSubmit={handleSubmit}>
           <label htmlFor="fname">Email</label>
-          <br />
           <input
             className="input"
             type="email"
@@ -61,8 +60,8 @@ function Login({location}) {
             onChange={e=>setEmail(e.target.value)}
           />
           <br />
-          <label htmlFor="lname">Password</label>
           <br />
+          <label htmlFor="lname">Password</label>
           <input
             className="input"
             type="password"

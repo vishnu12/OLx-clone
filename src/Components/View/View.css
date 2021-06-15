@@ -73,8 +73,9 @@
 
 
 @media(max-width:600px){
-  .viewParentDiv .rightSection button{
+  .btn-back{
     width: 100px;
     height: 35px;
+    font-size: 14px;
   }
 }

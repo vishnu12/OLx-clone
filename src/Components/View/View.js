@@ -23,6 +23,11 @@ function View({match}) {
 
   useEffect(()=>getPostById(match.params.id),[])
 
+  let chatProps={
+    postedBy:userInfo.username,
+    id:post && post.userId,
+    pid:match.params.id,
+  }
   
   return (
     <>
@@ -55,12 +60,12 @@ function View({match}) {
             )
           }
         </div>
-        <button className='btn-back' onClick={()=>history.push('/')}>Back To Home</button>
+        <button className='btn-back' onClick={()=>history.push('/')}>Go To Home</button>
 
       </div>
     </div>
     <div className='chat-div'>
-    <Chat />
+    <Chat chatProps={chatProps}/>
     </div>
     </>
   );
