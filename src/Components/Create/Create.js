@@ -28,6 +28,7 @@ const [values, setValues] = useState({
 
 const [loading, setLoading] = useState(false)
 const [imgPath, setImgPath] = useState('')
+
 const {prodName,category,price,file}=values
 
 let condition=prodName===''||category===''||price===''||file===''
@@ -35,6 +36,7 @@ let condition=prodName===''||category===''||price===''||file===''
 let imgObj={
   img:<img className='btn-img' src='/Images/spinner.gif' />
 }
+
 
 function imageHandler(event){
   if (event.target.files && event.target.files[0]) {
@@ -86,6 +88,9 @@ async function fireBaseUpload(){
           file:''
         })
         setLoading(false)
+        setTimeout(()=>{
+          history.push('/')
+        },2000)
     }
   } catch (error) {
       toast.error('File upload failed',{

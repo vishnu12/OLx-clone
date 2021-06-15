@@ -18,24 +18,24 @@ function Posts({match}) {
   async function getProductsPosts() {
     let tempArray=[]
     const res = await firebase.firestore().collection('products').get()
-    const posts=res.docs.map(itm=>{
+    const data=res.docs.map(itm=>{
         return {
           ...itm.data(),
           id:itm.id
         }
       })
-      setSortedPosts(posts && posts.sort(() => Math.random() - Math.random()).slice(0, 3))
-      posts && posts.forEach(itm=>{
+      setSortedPosts(data && data.sort(() => Math.random() - Math.random()).slice(0, 3))
+      data && data.forEach(itm=>{
         if(itm.prodName.includes(term) || itm.category.includes(term)){
            tempArray.push(itm)
         }
       })
-     if(tempArray.length===0){
+     if(tempArray.length===0 && data.length!==0){
        toast.warning('No such item exists',{
          position:toast.POSITION.TOP_CENTER,
          autoClose:2000
        })
-       setPosts(posts)
+       setPosts(data)
       
      }else{
       setPosts(tempArray)
@@ -94,7 +94,7 @@ function Posts({match}) {
         {
           sortedPosts && sortedPosts.map((post,ind)=>{
             return(
-              <div className="card">
+              <div className="card" key={ind} onClick={()=>history.push(`/details/${post.id}`)}>
               <div className="favorite">
                 <Heart></Heart>
               </div>

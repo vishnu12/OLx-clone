@@ -1,8 +1,10 @@
 import React,{useState,useEffect,useContext} from 'react';
 import {useHistory} from 'react-router-dom'
 import {FirebaseContext} from '../../store/FirebaseContext'
-
 import './View.css';
+import {Chat} from '../chat/Chat'
+
+
 function View({match}) {
 
   const {firebase}=useContext(FirebaseContext)
@@ -23,6 +25,7 @@ function View({match}) {
 
   
   return (
+    <>
     <div className="viewParentDiv">
       {
         post && <div className="imageShowDiv">
@@ -52,10 +55,14 @@ function View({match}) {
             )
           }
         </div>
-        <button onClick={()=>history.push('/')}>Back To Home</button>
+        <button className='btn-back' onClick={()=>history.push('/')}>Back To Home</button>
+
       </div>
-     
     </div>
+    <div className='chat-div'>
+    <Chat />
+    </div>
+    </>
   );
 }
 export default View;
