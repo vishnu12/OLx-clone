@@ -5,7 +5,7 @@ import 'material-react-toastify/dist/ReactToastify.css';
 import {FirebaseContext} from '../../store/FirebaseContext'
 import { AuthContext } from '../../store/AuthContext';
 import './View.css';
-import {Chat} from '../Chat/Chat'
+import {Chat} from '../Chat/chat'
 
 
 function View({match}) {
