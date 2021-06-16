@@ -121,7 +121,6 @@ async function handleSubmit(e) {
         <div className="centerDiv">
           <form onSubmit={handleSubmit}>
             <label htmlFor="fname">Name</label>
-            <br />
             <input
               className="input"
               type="text"
@@ -130,9 +129,7 @@ async function handleSubmit(e) {
               onChange={handleChange}
             />
             <br />
-            <br />
             <label htmlFor="fname">Category</label>
-            <br />
             <input
               className="input"
               type="text"
@@ -141,19 +138,14 @@ async function handleSubmit(e) {
               onChange={handleChange}
             />
             <br />
-            <br />
             <label htmlFor="fname">Price</label>
-            <br />
             <input className="input" type="number" name="price" 
             value={price} 
             onChange={handleChange}
             />
             <br />
-            <br />
             <img alt="Posts" width="75px" height="75px" src={imgPath}></img>
-            <br />
             <input type="file" name='file' onChange={handleChange} />
-            <br />
             <button className="uploadBtn" type='submit'>{loading?imgObj.img:'Upload and Submit'}</button>
           </form>
         </div>

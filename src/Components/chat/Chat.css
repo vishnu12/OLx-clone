@@ -14,7 +14,7 @@
     min-height: 15rem;
 }
 
-h3{
+h3,h5{
     opacity: 0.9;
 }
 
@@ -46,6 +46,16 @@ form{
     font-size: 15px;
     padding: 5px 10px;
     margin-left: 0.5rem;
+    cursor: pointer;
+}
+
+.btn:focus{
+    outline: none;
+    box-shadow: none;
+}
+
+.btn:hover{
+    color: #fff;
 }
 
 .messages{
@@ -60,9 +70,9 @@ form{
 .btn-img{
     object-fit: contain;
     text-align: center;
-    margin: 2px auto;
-    width: 18px;
-    height: 18px;
+    margin-bottom: 5px;
+    width: 15px;
+    height: 15px;
     background-color: transparent;
     border: none;
     border-radius: 50%;

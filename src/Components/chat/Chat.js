@@ -87,12 +87,16 @@ export const Chat = ({chatProps}) => {
     return (
         <div className='main'>
             <ToastContainer />
-         <h3>Chat with the {conditionalText}</h3>
+         {
+             !user?<h5>Please login to chat with the seller</h5>:
+             <h3>Chat with the {conditionalText}</h3>
+         }
         <div className='chat-container'>
             <div className="chat-form">
                <form>
                <input type="text" name="text" value={text} id="text" onChange={e=>setText(e.target.value)}/>
-               <button className='btn' type="button" onClick={()=>sendMessage()}>{loading?imgObj.img:'SEND'}</button>
+               <button className='btn' type="button" disabled={!user}
+               onClick={()=>sendMessage()}>{loading?imgObj.img:'SEND'}</button>
                </form>
             </div>
         </div>
